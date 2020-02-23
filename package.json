@@ -17,9 +17,7 @@
     "build": "yarn clean && NODE_ENV=production webpack --mode production",
     "test:js": "jest",
     "test:js:watch": "jest --watch",
-    "test:js:coverage": "jest --coverage",
-    "test:cypress": "cypress open",
-    "test:webhint": "hint http://localhost:3000"
+    "test:js:coverage": "jest --coverage"
   },
   "engines": {
     "node": ">=12.0.0",
@@ -70,5 +68,7 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "three": "^0.113.2"
+  }
 }
