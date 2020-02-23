@@ -1,0 +1,12 @@
+{
+  "entry": {
+    "app": "./src/index.js"
+  },
+  "output": {
+    "dir": "./dist"
+  },
+  "public": {
+    "images": "public/images",
+    "fonts": "public/fonts"
+  }
+}

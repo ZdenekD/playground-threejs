@@ -1,0 +1,14 @@
+:root {
+    --color-blue: #26ade4;
+    --color-green: #88c425;
+    --color-yellow: #ffea08;
+    --color-orange: #ffb008;
+    --color-red: #ef512e;
+    --color-white: #f2f2f2;
+    --color-black: #000;
+    --gutter: 10px;
+    --transition-in: .2s;
+    --transition-out: .4s;
+    --transition-timing: ease-in-out;
+    --border-radius: 4px;
+}
