@@ -38,7 +38,7 @@ const init = () => {
     controls.update();
 
     const size = 0.25;
-    const texture = new THREE.TextureLoader().load('./images/orange-bump-texture.jpg');
+    const texture = new THREE.TextureLoader().load(`${assetPath}/bricks-diffuse3.png`);
     const alpha = new THREE.TextureLoader().load('./images/dots.jpg');
     const background = new THREE.CubeTextureLoader().setPath(`${assetPath}/skybox1_`).load([
         'px.jpg',
