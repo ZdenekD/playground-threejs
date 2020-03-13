@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import './index.css';
 
 let scene;
@@ -15,7 +16,13 @@ const onResize = () => {
 
     renderer.setSize(app.offsetWidth, app.offsetHeight);
 };
+const update = () => {
+    requestAnimationFrame(update);
+    renderer.render(scene, camera);
+};
 const init = () => {
+    const assetPath = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/2666677';
+
     scene = new THREE.Scene();
     scene.background = new THREE.Color('#aaa');
 
@@ -25,17 +32,38 @@ const init = () => {
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(app.offsetWidth, app.offsetHeight);
 
-    const geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
-    const material = new THREE.MeshStandardMaterial({color: new THREE.Color('skyblue')});
+    const controls = new OrbitControls(camera, renderer.domElement);
+
+    controls.target.set(0, 0, 0);
+    controls.update();
+
+    const size = 0.25;
+    const texture = new THREE.TextureLoader().load(`${assetPath}/bricks-diffuse3.png`);
+    const alpha = new THREE.TextureLoader().load('./images/dots.jpg');
+    const background = new THREE.CubeTextureLoader().setPath(`${assetPath}/skybox1_`).load([
+        'px.jpg',
+        'nx.jpg',
+        'py.jpg',
+        'ny.jpg',
+        'pz.jpg',
+        'nz.jpg',
+    ]);
+    const geometry = new THREE.BoxGeometry(size, size, size);
+    const standardMaterial = new THREE.MeshStandardMaterial({color: new THREE.Color('white'), map: texture});
+    const lambertMaterial = new THREE.MeshLambertMaterial({
+        color: new THREE.Color('white'), map: texture, alphaMap: alpha, transparent: true, side: THREE.DoubleSide,
+    });
     const light = new THREE.DirectionalLight();
 
-    box = new THREE.Mesh(geometry, material);
-    boxLeft = new THREE.Mesh(geometry, material);
-    boxRight = new THREE.Mesh(geometry, material);
+    box = new THREE.Mesh(geometry, standardMaterial);
+    boxLeft = new THREE.Mesh(geometry, lambertMaterial);
+    boxRight = new THREE.Mesh(geometry, lambertMaterial);
 
     boxLeft.position.x = -0.5;
     boxRight.position.x = 0.5;
+
     light.position.set(0, 1, 2);
+    scene.background = background;
 
     scene.add(box);
     scene.add(boxLeft);
@@ -45,6 +73,8 @@ const init = () => {
     app.appendChild(renderer.domElement);
 
     window.addEventListener('resize', onResize, false);
+
+    update();
 };
 const animate = () => {
     requestAnimationFrame(animate);
