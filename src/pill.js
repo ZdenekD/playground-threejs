@@ -57,7 +57,7 @@ const init = () => {
     scene.add(light);
     scene.add(ambient);
 
-    const segments = 50;
+    const segments = 150;
 
     capsule = new THREE.Group();
 
